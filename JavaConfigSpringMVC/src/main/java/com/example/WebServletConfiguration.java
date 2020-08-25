@@ -1,6 +1,7 @@
 package com.example;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -11,10 +12,10 @@ import javax.servlet.ServletRegistration;
 public class WebServletConfiguration implements WebApplicationInitializer {
 
     public void onStartup(ServletContext servletContext) throws ServletException {
-        XmlWebApplicationContext xmlWebApplicationContext= new XmlWebApplicationContext();
-        xmlWebApplicationContext.setConfigLocation("classpath:application-config.xml");
+        AnnotationConfigWebApplicationContext ApplicationContext= new AnnotationConfigWebApplicationContext();
+       ApplicationContext.register(AppConfiguration.class);
 
-        DispatcherServlet dispatcherServlet= new DispatcherServlet(xmlWebApplicationContext);
+        DispatcherServlet dispatcherServlet= new DispatcherServlet(ApplicationContext);
         ServletRegistration.Dynamic myCustomDispatcherServlet= servletContext.
                 addServlet("myDispatcherServlet",dispatcherServlet);
         myCustomDispatcherServlet.setLoadOnStartup(1);
